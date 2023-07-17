@@ -51,7 +51,7 @@ for message in message_bodies:
 
         # Read data from S3
         df = spark.read.format("csv").option("delimiter", ",").option("header", "true").option("inferSchema", "true").load(data)
-
+        df=df.withColumn(col("Date", current_date()))
         # Write new records to Redshift
         df.write \
             .format("jdbc") \
